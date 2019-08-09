@@ -85,7 +85,7 @@ String data = "#################################################################
 
 实现 **VPNActivity.VPNStatusListener** 接口
 ```java
-   public class MainActivity extends VPNActivity implements  {
+   public class MainActivity extends VPNActivity implements VPNActivity.VPNStatusListener{
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
