@@ -88,6 +88,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     private Handler guiHandler;
     private Toast mlastToast;
     private Runnable mOpenVPNThread;
+    private Intent mContentIntent = null;
 
     // From: http://stackoverflow.com/questions/3758606/how-to-convert-byte-size-into-human-readable-format-in-java
     public static String humanReadableByteCount(long bytes, boolean mbit) {
@@ -215,6 +216,10 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
             });
     }
 
+    public void setContentIntent(Intent contentIntent) {
+        this.mContentIntent = contentIntent;
+    }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void lpNotificationExtras(Notification.Builder nbuilder) {
         nbuilder.setCategory(Notification.CATEGORY_SERVICE);
@@ -295,12 +300,11 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
     }
 
     PendingIntent getLogPendingIntent() {
-        // Let the configure Button show the Log
-        // TODO Intent.class
-        Intent intent = new Intent(getBaseContext(), Intent.class);
+        if (mContentIntent == null) {
+            mContentIntent = new Intent(getBaseContext(), Intent.class);
+        }
         //intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        PendingIntent startLW = PendingIntent.getActivity(this, 0, intent, 0);
-        return startLW;
+        return PendingIntent.getActivity(this, 0, mContentIntent, 0);
     }
 
 

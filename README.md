@@ -131,10 +131,51 @@ String data = "#################################################################
         }
    }
 ```
+**或者**
 
+```java
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // bindStatus
+        BindUtils.bind(this);
+    }
+    
+    @BindStatus
+    public void onStatus(StatusInfo statusInfo) {
+        switch (statusInfo.getLevel()) {
+            case LEVEL_START:
+                // 开始连接
+                break;
+            case LEVEL_CONNECTED:
+                // 已连接
+                break;
+            case LEVEL_VPNPAUSED:
+                // 暂停
+                break;
+            .....
+    }
+    
+    @Override
+    protected void onDestroy() {
+        BindUtils.unBind(this);
+        super.onDestroy();
+    }
+```
 
 ---
-#### Step 6. 断开连接
+#### Step 6. 通知栏点击跳转
+```java
+    @Override
+    public Intent getJumpIntent() {
+        Intent intent = new Intent();
+        intent.setClassName(getPackageName(), MainActivity.class.getName());
+        intent.setFlags(FLAG_ACTIVITY_SINGLE_TOP);
+        return intent;
+    }
+```
+---
+#### Step 7. 通知栏点击跳转
 
 ```java
  stopVpn();

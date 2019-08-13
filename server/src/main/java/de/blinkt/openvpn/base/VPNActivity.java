@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.blinkt.openvpn.BindUtils;
 import de.blinkt.openvpn.VpnProfile;
 import de.blinkt.openvpn.core.ConfigParser;
 import de.blinkt.openvpn.core.OpenVPNService;
@@ -38,7 +39,7 @@ import static de.blinkt.openvpn.core.VpnStatus.ConnectionStatus.LEVEL_WAITING_FO
  * しーＪ
  * 此处无Bug
  */
-public class VPNActivity extends AppCompatActivity implements VpnStatus.StateListener {
+public abstract class VPNActivity extends AppCompatActivity implements VpnStatus.StateListener {
 
     private String TAG = VPNActivity.class.getSimpleName();
     private static final int START_VPN_PROFILE = 70;
@@ -83,6 +84,9 @@ public class VPNActivity extends AppCompatActivity implements VpnStatus.StateLis
             // We've bound to LocalService, cast the IBinder and get LocalService instance
             OpenVPNService.LocalBinder binder = (OpenVPNService.LocalBinder) service;
             mVPNService = binder.getService();
+            if (mVPNService != null){
+                mVPNService.setContentIntent(getJumpIntent());
+            }
         }
 
         @Override
@@ -108,7 +112,6 @@ public class VPNActivity extends AppCompatActivity implements VpnStatus.StateLis
             mVPNStatusListener.remove(listener);
         }
     }
-
 
     public VpnProfile getVpnProfile() {
         return mVpnProfile;
@@ -172,6 +175,14 @@ public class VPNActivity extends AppCompatActivity implements VpnStatus.StateLis
             mVPNService.getManagement().stopVPN(false);
     }
 
+    public void setAccountAndPassword(String account, String password) {
+        if (getVpnProfile() == null)
+            throw new IllegalStateException("You need loadVpnProfile!");
+
+        getVpnProfile().mUsername = account;
+        getVpnProfile().mPassword = password;
+    }
+
     /**
      * 是否过滤广告
      *
@@ -181,8 +192,11 @@ public class VPNActivity extends AppCompatActivity implements VpnStatus.StateLis
         this.filterAds = filter;
     }
 
+    public abstract Intent getJumpIntent();
+
     @Override
     public void updateState(String state, String logmessage, int localizedResId, VpnStatus.ConnectionStatus level) {
+        BindUtils.bindStatus(state, logmessage, localizedResId, level);
         // 分发到事件监听
         for (VPNStatusListener vpnStatusListener : mVPNStatusListener) {
             switch (level) {
