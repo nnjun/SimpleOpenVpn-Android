@@ -1,27 +1,24 @@
 # SimpleOpenVpn
 
-![](https://img.shields.io/badge/language-java-brightgreen.svg)
+![](https://img.shields.io/badge/language-java-brightgreen.svg) 
 
-**[English](ENGLISH.md "English")**
+Based on OpenVPN encapsulated VPN connection library, support account password connection support all features of OpenVPN.
 
-基于OpenVPN封装的VPN连接库，支持账号密码连接 支持OpenVPN所有特性。
+## Applicable scenarios
+1. Network switching and area switching.
+2. Remove advertising (self-configuring net dns).
+3. Wait....
 
-## 适用场景
-1. 网络切换、地区切换。
-2. 去除广告（自行配置净网dns）。
-3. 等等....
-
-## 使用条件
-需要一台搭建有OpenVpn的服务器~
+## Conditions of Use
+Need a server with OpenVpn~
 
 
-## 使用方式
 
-### 准备
+### Ready
 
 Step 1. Clone，Input Module...
 
-Step 2. 配置权限
+Step 2. Configuration permissions
 
 ```xml
     <uses-permission android:name="android.permission.INTERNET" />
@@ -33,9 +30,9 @@ Step 2. 配置权限
 
 ### Usage
 
-#### Step 1.初始化
+#### Step 1.Initialization
 
-在您的Activity中 extends **VPNActivity**:
+Activity extends **VPNActivity**:
 
 ```Java
 public class MainActivity extends VPNActivity{
@@ -44,7 +41,7 @@ public class MainActivity extends VPNActivity{
 ```
 > 
 
-#### Step 2. 设置ovpn配置信息
+#### Step 2. Setting ovpn configuration information
 
 ```Java
 String data = "###############################################################################\n" +
@@ -63,29 +60,29 @@ String data = "#################################################################
             "\n" +
             "</key>\n";
          
-// 设置此次连接的配置   
+// Set up the configuration for this connection 
  loadVpnProfile(data);
 ```
 
 
 ---
-#### Step 3. 更多配置信息设置
+#### Step 3. More configuration information settings
 
 ```java
-   // 在此可以设置账号密码或者其他更多信息
+   // Here you can set up your account password or other more information.
    getVpnProfile().mName = "This is VPN Title";
    .....
 ```
 ---
-#### Step 4. 一切已经准备好了，开始连接吧！
+#### Step 4. Everything is ready. Let's start connecting.
 
 ```java
     connectVpn();
 ```
 ---
-#### Step 5. 状态监听
+#### Step 5. Status monitoring
 
-实现 **VPNActivity.VPNStatusListener** 接口
+implements **VPNActivity.VPNStatusListener** 
 ```java
    public class MainActivity extends VPNActivity implements VPNActivity.VPNStatusListener{
         @Override
@@ -133,7 +130,7 @@ String data = "#################################################################
         }
    }
 ```
-**或者**
+**or**
 
 ```java
     @Override
@@ -166,7 +163,7 @@ String data = "#################################################################
 ```
 
 ---
-#### Step 6. 通知栏点击跳转
+#### Step 6. Notice Bar Click Jump
 ```java
     @Override
     public Intent getJumpIntent() {
@@ -177,13 +174,13 @@ String data = "#################################################################
     }
 ```
 ---
-#### Step 7. 断开连接
+#### Step 7. Disconnect
 
 ```java
  stopVpn();
 ```
 
-#### 如果项目帮助到你，请多多star 感谢！
+#### If the project helps you, thank you very much!
 
 ### License
 
