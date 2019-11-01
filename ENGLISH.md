@@ -180,7 +180,7 @@ implements **VPNActivity.VPNStatusListener**
  stopVpn();
 ```
 
-#### If the project helps you, thank you very much!
+#### If the project helps you, please star!
 
 ### License
 
