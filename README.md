@@ -4,7 +4,7 @@
 
 **[English](ENGLISH.md "English")**
 
-基于OpenVPN封装的VPN连接库，支持账号密码连接 支持OpenVPN所有特性。
+基于OpenVPN的VPN连接库，支持账号密码连接 支持OpenVPN所有特性。
 
 ## 适用场景
 1. 网络切换、地区切换。
